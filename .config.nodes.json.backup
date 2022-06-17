@@ -783,5 +783,79 @@
                 "file": "/home/pi/.node-red/node_modules/node-red-contrib-postgresql/postgresql.js"
             }
         }
+    },
+    "@mschaeffler/node-red-lora": {
+        "name": "@mschaeffler/node-red-lora",
+        "version": "1.2.4",
+        "local": true,
+        "user": true,
+        "nodes": {
+            "lorawan-server": {
+                "name": "lorawan-server",
+                "types": [
+                    "lorawan-server"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "@mschaeffler/node-red-lora",
+                "file": "/home/pi/.node-red/node_modules/@mschaeffler/node-red-lora/lorawan-server.js"
+            },
+            "lorawan-keys": {
+                "name": "lorawan-keys",
+                "types": [
+                    "lorawan-keys"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "@mschaeffler/node-red-lora",
+                "file": "/home/pi/.node-red/node_modules/@mschaeffler/node-red-lora/lorawan-keys.js"
+            },
+            "lorawan-decoder": {
+                "name": "lorawan-decoder",
+                "types": [
+                    "lorawan-packet-decoder"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "@mschaeffler/node-red-lora",
+                "file": "/home/pi/.node-red/node_modules/@mschaeffler/node-red-lora/lorawan-packet-decoder.js"
+            },
+            "lorawan-encoder": {
+                "name": "lorawan-encoder",
+                "types": [
+                    "lorawan-packet-encoder"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "@mschaeffler/node-red-lora",
+                "file": "/home/pi/.node-red/node_modules/@mschaeffler/node-red-lora/lorawan-packet-encoder.js"
+            },
+            "lorawan-checkFC": {
+                "name": "lorawan-checkFC",
+                "types": [
+                    "lorawan-packet-checkFC"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "@mschaeffler/node-red-lora",
+                "file": "/home/pi/.node-red/node_modules/@mschaeffler/node-red-lora/lorawan-packet-checkFC.js"
+            },
+            "lorawan-send": {
+                "name": "lorawan-send",
+                "types": [
+                    "lorawan-queue-message"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "@mschaeffler/node-red-lora",
+                "file": "/home/pi/.node-red/node_modules/@mschaeffler/node-red-lora/lorawan-queue-message.js"
+            }
+        }
     }
 }
