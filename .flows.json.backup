@@ -190,6 +190,54 @@
         "sessionExpiry": ""
     },
     {
+        "id": "181746e1a8504a56",
+        "type": "postgreSQLConfig",
+        "name": "",
+        "host": "localhost",
+        "hostFieldType": "str",
+        "port": "5432",
+        "portFieldType": "num",
+        "database": "pi",
+        "databaseFieldType": "str",
+        "ssl": "false",
+        "sslFieldType": "bool",
+        "applicationName": "",
+        "applicationNameType": "str",
+        "max": "10",
+        "maxFieldType": "num",
+        "idle": "1000",
+        "idleFieldType": "num",
+        "connectionTimeout": "10000",
+        "connectionTimeoutFieldType": "num",
+        "user": "pi",
+        "userFieldType": "str",
+        "password": "raspberry",
+        "passwordFieldType": "str"
+    },
+    {
+        "id": "20ae1e52d1eef983",
+        "type": "postgreSQLConfig",
+        "name": "myuser@timescale:5432/iot",
+        "host": "timescale",
+        "hostFieldType": "str",
+        "port": "5432",
+        "portFieldType": "num",
+        "database": "iot",
+        "databaseFieldType": "str",
+        "ssl": "false",
+        "sslFieldType": "bool",
+        "max": "10",
+        "maxFieldType": "num",
+        "idle": "1000",
+        "idleFieldType": "num",
+        "connectionTimeout": "10000",
+        "connectionTimeoutFieldType": "num",
+        "user": "myuser",
+        "userFieldType": "str",
+        "password": "???",
+        "passwordFieldType": "str"
+    },
+    {
         "id": "7cbb934b7e70ed98",
         "type": "ui_gauge",
         "z": "535e4b2995bd1b33",
@@ -212,8 +260,8 @@
         "seg1": "",
         "seg2": "",
         "className": "",
-        "x": 1250,
-        "y": 20,
+        "x": 1070,
+        "y": 40,
         "wires": []
     },
     {
@@ -233,7 +281,7 @@
         "y": 80,
         "wires": [
             [
-                "3df3e042989a44d4"
+                "e54ec05ae1c82e1e"
             ]
         ]
     },
@@ -251,8 +299,8 @@
         "correl": "",
         "expiry": "",
         "broker": "2a2ad6d19cb46f67",
-        "x": 1020,
-        "y": 560,
+        "x": 80,
+        "y": 400,
         "wires": []
     },
     {
@@ -261,8 +309,8 @@
         "z": "535e4b2995bd1b33",
         "name": "rpi",
         "port": "1700",
-        "x": 370,
-        "y": 820,
+        "x": 330,
+        "y": 560,
         "wires": [
             [
                 "24c723b31f829060"
@@ -291,8 +339,8 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 160,
-        "y": 740,
+        "x": 100,
+        "y": 480,
         "wires": [
             [
                 "4622b9151676584c"
@@ -306,8 +354,8 @@
         "name": "msg",
         "keys": "127091be60fdfc3e",
         "power": "14",
-        "x": 230,
-        "y": 800,
+        "x": 190,
+        "y": 540,
         "wires": [
             [
                 "0e8626cd13e282dd"
@@ -322,8 +370,8 @@
         "name": "",
         "keys": "127091be60fdfc3e",
         "txdelay": "1012500",
-        "x": 530,
-        "y": 760,
+        "x": 490,
+        "y": 500,
         "wires": [
             [
                 "d3a0505dcce24b42"
@@ -337,8 +385,8 @@
         "type": "lorawan-packet-checkFC",
         "z": "535e4b2995bd1b33",
         "name": "",
-        "x": 720,
-        "y": 820,
+        "x": 680,
+        "y": 560,
         "wires": [
             [
                 "03e99e6736d5775b"
@@ -358,8 +406,8 @@
         "name": "",
         "mode": "link",
         "links": [],
-        "x": 965,
-        "y": 780,
+        "x": 925,
+        "y": 520,
         "wires": []
     },
     {
@@ -374,8 +422,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 950,
-        "y": 820,
+        "x": 910,
+        "y": 560,
         "wires": []
     },
     {
@@ -387,11 +435,12 @@
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "payload",
+        "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 950,
-        "y": 860,
+        "x": 910,
+        "y": 600,
         "wires": []
     },
     {
@@ -407,8 +456,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1250,
-        "y": 80,
+        "x": 1270,
+        "y": 160,
         "wires": []
     },
     {
@@ -424,49 +473,24 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1270,
-        "y": 160,
+        "x": 1290,
+        "y": 200,
         "wires": []
-    },
-    {
-        "id": "846c25190cc19d3e",
-        "type": "inject",
-        "z": "535e4b2995bd1b33",
-        "name": "TTN Example",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "{\"payload\":{\"end_device_ids\":{},\"correlation_ids\":[],\"received_at\":\"string\",\"uplink_message\":{\"f_port\":2,\"frm_payload\":\"MQ==\",\"decoded_payload\":{\"ledState\":\"off\"}}}}",
-        "payloadType": "json",
-        "x": 110,
-        "y": 140,
-        "wires": [
-            [
-                "3df3e042989a44d4"
-            ]
-        ]
     },
     {
         "id": "3df3e042989a44d4",
         "type": "json",
         "z": "535e4b2995bd1b33",
         "name": "TTN JSON",
-        "property": "payload.payload",
-        "action": "",
-        "pretty": true,
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
         "x": 310,
         "y": 80,
         "wires": [
             [
-                "e9d6001bd11510fb",
-                "545eccae648f7614"
+                "468c1bbae42d61bb",
+                "e6c96e2c4cc1b946"
             ]
         ]
     },
@@ -480,7 +504,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "payload.uplink_message.frm_payload",
+                "to": "payload.payload.uplink_message.frm_payload",
                 "tot": "msg"
             }
         ],
@@ -489,8 +513,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 520,
-        "y": 80,
+        "x": 480,
+        "y": 40,
         "wires": [
             [
                 "27a5f301bcd5b9ea"
@@ -508,8 +532,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 620,
-        "y": 480,
+        "x": 100,
+        "y": 360,
         "wires": [
             []
         ]
@@ -521,29 +545,12 @@
         "name": "Base64 To Buffer",
         "action": "",
         "property": "payload",
-        "x": 750,
+        "x": 670,
         "y": 80,
         "wires": [
             [
                 "f9b9ca1e6d16fa85"
             ]
-        ]
-    },
-    {
-        "id": "fc006a9d44cc5b57",
-        "type": "inject",
-        "z": "535e4b2995bd1b33",
-        "name": "",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 1909,
-        "y": 714,
-        "wires": [
-            []
         ]
     },
     {
@@ -569,35 +576,132 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 980,
+        "x": 880,
         "y": 80,
         "wires": [
             [
                 "7cbb934b7e70ed98",
+                "369edda658161204"
+            ]
+        ]
+    },
+    {
+        "id": "852f8cc5a2901e7b",
+        "type": "postgresql",
+        "z": "535e4b2995bd1b33",
+        "name": "pi Database",
+        "query": "insert into lecturas (idtimestamp , lectura) values ($1, $2);",
+        "postgreSQLConfig": "181746e1a8504a56",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 1290,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9d5cbbc1900ce27b",
+        "type": "inject",
+        "z": "535e4b2995bd1b33",
+        "name": "TTN Example",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"topic\":\"v3/prueb2@ttn/devices/eui-a8610a32371c7808/up\",\"payload\":{\"end_device_ids\":{\"device_id\":\"eui-a8610a32371c7808\",\"application_ids\":{\"application_id\":\"prueb2\"},\"dev_eui\":\"A8610A32371C7808\",\"join_eui\":\"0000000000000000\"},\"correlation_ids\":[\"as:up:01G66BW1J44F27MS63QAQV3TP5\",\"rpc:/ttn.lorawan.v3.AppAs/SimulateUplink:5dc72871-9ef1-4307-bca4-17a95f3b267b\"],\"received_at\":\"2022-06-23T18:47:52.644330252Z\",\"uplink_message\":{\"f_port\":2,\"frm_payload\":\"MQ==\",\"rx_metadata\":[{\"gateway_ids\":{\"gateway_id\":\"test\"},\"rssi\":42,\"channel_rssi\":42,\"snr\":4.2}],\"settings\":{\"data_rate\":{\"lora\":{\"bandwidth\":125000,\"spreading_factor\":7}}}},\"simulated\":true},\"qos\":0,\"retain\":false,\"_msgid\":\"a00adb4566ffb5fb\"}",
+        "payloadType": "json",
+        "x": 110,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e6c96e2c4cc1b946",
+        "type": "change",
+        "z": "535e4b2995bd1b33",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.payload.received_at",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 480,
+        "y": 120,
+        "wires": [
+            [
+                "369edda658161204"
+            ]
+        ]
+    },
+    {
+        "id": "369edda658161204",
+        "type": "join",
+        "z": "535e4b2995bd1b33",
+        "name": "",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "2",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 1070,
+        "y": 120,
+        "wires": [
+            [
+                "6223ee1b5d01f10a"
+            ]
+        ]
+    },
+    {
+        "id": "6223ee1b5d01f10a",
+        "type": "function",
+        "z": "535e4b2995bd1b33",
+        "name": "",
+        "func": "msg.params = [ msg.payload[0], msg.payload[1] ];\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1080,
+        "y": 200,
+        "wires": [
+            [
+                "852f8cc5a2901e7b",
                 "7ea96d910b18bc8a",
                 "a51b33186e4aea0d"
             ]
         ]
     },
     {
-        "id": "e9d6001bd11510fb",
-        "type": "debug",
-        "z": "535e4b2995bd1b33",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 970,
-        "y": 260,
-        "wires": []
-    },
-    {
-        "id": "545eccae648f7614",
+        "id": "e54ec05ae1c82e1e",
         "type": "debug",
         "z": "535e4b2995bd1b33",
         "name": "",
@@ -609,8 +713,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 990,
-        "y": 340,
+        "x": 410,
+        "y": 200,
         "wires": []
     },
     {
@@ -621,8 +725,8 @@
         "property": "temperature",
         "action": "",
         "pretty": false,
-        "x": 310,
-        "y": 180,
+        "x": 290,
+        "y": 60,
         "wires": [
             [
                 "23cc1ac95541a147",
@@ -647,8 +751,8 @@
         "topic": "",
         "payload": "{\"payload\":{\"temperature\":90,\"temperature_c\":32.22222}}",
         "payloadType": "json",
-        "x": 130,
-        "y": 180,
+        "x": 110,
+        "y": 60,
         "wires": [
             [
                 "76a1f722f11f8949"
@@ -678,8 +782,8 @@
         "seg1": "",
         "seg2": "",
         "className": "",
-        "x": 850,
-        "y": 160,
+        "x": 690,
+        "y": 120,
         "wires": []
     },
     {
@@ -701,8 +805,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 560,
-        "y": 160,
+        "x": 500,
+        "y": 120,
         "wires": [
             [
                 "fa242dcb1dfd0915"
@@ -732,8 +836,8 @@
         "seg1": "",
         "seg2": "",
         "className": "",
-        "x": 810,
-        "y": 40,
+        "x": 690,
+        "y": 60,
         "wires": []
     },
     {
@@ -755,8 +859,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 560,
-        "y": 100,
+        "x": 500,
+        "y": 60,
         "wires": [
             [
                 "519b2fb8348c287e"
