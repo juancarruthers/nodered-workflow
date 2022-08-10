@@ -241,7 +241,7 @@
         "id": "7cbb934b7e70ed98",
         "type": "ui_gauge",
         "z": "535e4b2995bd1b33",
-        "name": "",
+        "name": "CO2 Gauge",
         "group": "b62f3f727d91655d",
         "order": 0,
         "width": 0,
@@ -251,16 +251,16 @@
         "label": "units",
         "format": "{{value}}",
         "min": 0,
-        "max": "50",
+        "max": "5000",
         "colors": [
             "#00b500",
             "#e6e600",
             "#ca3838"
         ],
-        "seg1": "",
-        "seg2": "",
+        "seg1": "500",
+        "seg2": "2000",
         "className": "",
-        "x": 1070,
+        "x": 1090,
         "y": 40,
         "wires": []
     },
@@ -280,9 +280,7 @@
         "x": 100,
         "y": 80,
         "wires": [
-            [
-                "e54ec05ae1c82e1e"
-            ]
+            []
         ]
     },
     {
@@ -498,7 +496,7 @@
         "id": "468c1bbae42d61bb",
         "type": "change",
         "z": "535e4b2995bd1b33",
-        "name": "FRM_Payload",
+        "name": "Measure",
         "rules": [
             {
                 "t": "set",
@@ -513,7 +511,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 480,
+        "x": 460,
         "y": 40,
         "wires": [
             [
@@ -569,14 +567,14 @@
         "id": "f9b9ca1e6d16fa85",
         "type": "function",
         "z": "535e4b2995bd1b33",
-        "name": "Buffer To Output Value",
-        "func": "msg.payload = msg.payload[0]\nreturn msg;",
+        "name": "Buffer To Decimal",
+        "func": "var buf = msg.payload;\nvar arrIn = buf.length - 1;\nvar value = 0\nvar exp = 0\nfor (var i= arrIn; i >= 0; i--){\n    inc = buf[i] * 2 ** exp\n    value = value + inc\n    exp = exp + 8\n}\nmsg.payload = value;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 880,
+        "x": 870,
         "y": 80,
         "wires": [
             [
@@ -589,8 +587,8 @@
         "id": "852f8cc5a2901e7b",
         "type": "postgresql",
         "z": "535e4b2995bd1b33",
-        "name": "pi Database",
-        "query": "insert into lecturas (idtimestamp , lectura) values ($1, $2);",
+        "name": "Insert Scan",
+        "query": "insert into measures (id, \"timestamp\" , measure) values (11, $1, $2);",
         "postgreSQLConfig": "181746e1a8504a56",
         "split": false,
         "rowsPerMsg": 1,
@@ -621,14 +619,17 @@
         "x": 110,
         "y": 140,
         "wires": [
-            []
+            [
+                "3df3e042989a44d4",
+                "ba90024cabcf2913"
+            ]
         ]
     },
     {
         "id": "e6c96e2c4cc1b946",
         "type": "change",
         "z": "535e4b2995bd1b33",
-        "name": "",
+        "name": "Timestamp",
         "rules": [
             {
                 "t": "set",
@@ -643,7 +644,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 480,
+        "x": 470,
         "y": 120,
         "wires": [
             [
@@ -655,7 +656,7 @@
         "id": "369edda658161204",
         "type": "join",
         "z": "535e4b2995bd1b33",
-        "name": "",
+        "name": "Exctracted Data",
         "mode": "custom",
         "build": "array",
         "property": "payload",
@@ -671,7 +672,7 @@
         "reduceInit": "",
         "reduceInitType": "",
         "reduceFixup": "",
-        "x": 1070,
+        "x": 1100,
         "y": 120,
         "wires": [
             [
@@ -683,14 +684,14 @@
         "id": "6223ee1b5d01f10a",
         "type": "function",
         "z": "535e4b2995bd1b33",
-        "name": "",
+        "name": "Set Parameters",
         "func": "msg.params = [ msg.payload[0], msg.payload[1] ];\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1080,
+        "x": 1100,
         "y": 200,
         "wires": [
             [
@@ -709,13 +710,96 @@
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
+        "complete": "true",
+        "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 410,
-        "y": 200,
+        "x": 1030,
+        "y": 320,
         "wires": []
+    },
+    {
+        "id": "bf9f56b0d129938c",
+        "type": "ui_chart",
+        "z": "535e4b2995bd1b33",
+        "name": "",
+        "group": "b62f3f727d91655d",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "label": "chart",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": 1,
+        "removeOlderPoints": "5",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1030,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ba90024cabcf2913",
+        "type": "postgresql",
+        "z": "535e4b2995bd1b33",
+        "name": "Select Last Scans",
+        "query": "select m.measure, m.\"timestamp\" from (select * from measures\n\t\t\t\t\t\torder by id\n\t\t\t\t\t\tdesc limit 5) m\norder by m.id ASC",
+        "postgreSQLConfig": "181746e1a8504a56",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 650,
+        "y": 320,
+        "wires": [
+            [
+                "78b27f3f00a1d5a9",
+                "e54ec05ae1c82e1e"
+            ]
+        ]
+    },
+    {
+        "id": "78b27f3f00a1d5a9",
+        "type": "function",
+        "z": "535e4b2995bd1b33",
+        "name": "function 1",
+        "func": "var query = msg.payload\nvar measures = []\nvar timestamps = []\nfor (var i=0; i < query.length; i++){\n    measures[i] = query[i]['measure']\n    timestamps[i] = query[i]['timestamp']\n}\nmsg.payload=[{\n    \"series\": [\"temp1\"],\n    \"data\": [ output ],\n    \"labels\": timestamps\n}];\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 860,
+        "y": 400,
+        "wires": [
+            [
+                "e54ec05ae1c82e1e",
+                "bf9f56b0d129938c"
+            ]
+        ]
     },
     {
         "id": "76a1f722f11f8949",
@@ -763,6 +847,7 @@
         "id": "fa242dcb1dfd0915",
         "type": "ui_gauge",
         "z": "f4eaed5e5b0f0b50",
+        "d": true,
         "name": "",
         "group": "b62f3f727d91655d",
         "order": 2,
@@ -817,6 +902,7 @@
         "id": "519b2fb8348c287e",
         "type": "ui_gauge",
         "z": "f4eaed5e5b0f0b50",
+        "d": true,
         "name": "",
         "group": "b62f3f727d91655d",
         "order": 1,

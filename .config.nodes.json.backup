@@ -876,24 +876,5 @@
                 "file": "/home/pi/.node-red/node_modules/node-red-node-base64/70-base64.js"
             }
         }
-    },
-    "node-red-contrib-fusion": {
-        "name": "node-red-contrib-fusion",
-        "version": "1.2.0",
-        "local": true,
-        "user": true,
-        "nodes": {
-            "fusion": {
-                "name": "fusion",
-                "types": [
-                    "fusion"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-contrib-fusion",
-                "file": "/home/pi/.node-red/node_modules/node-red-contrib-fusion/10-fusion.js"
-            }
-        }
     }
 }
