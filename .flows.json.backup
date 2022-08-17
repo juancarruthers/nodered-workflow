@@ -588,7 +588,7 @@
         "type": "postgresql",
         "z": "535e4b2995bd1b33",
         "name": "Insert Scan",
-        "query": "insert into measures (id, \"timestamp\" , measure) values (11, $1, $2);",
+        "query": "insert into measures (\"timestamp\" , measure) values ($1, $2);",
         "postgreSQLConfig": "181746e1a8504a56",
         "split": false,
         "rowsPerMsg": 1,
@@ -620,8 +620,7 @@
         "y": 140,
         "wires": [
             [
-                "3df3e042989a44d4",
-                "ba90024cabcf2913"
+                "3df3e042989a44d4"
             ]
         ]
     },
@@ -694,29 +693,8 @@
         "x": 1100,
         "y": 200,
         "wires": [
-            [
-                "852f8cc5a2901e7b",
-                "7ea96d910b18bc8a",
-                "a51b33186e4aea0d"
-            ]
+            []
         ]
-    },
-    {
-        "id": "e54ec05ae1c82e1e",
-        "type": "debug",
-        "z": "535e4b2995bd1b33",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1030,
-        "y": 320,
-        "wires": []
     },
     {
         "id": "bf9f56b0d129938c",
@@ -736,8 +714,8 @@
         "dot": false,
         "ymin": "0",
         "ymax": "100",
-        "removeOlder": 1,
-        "removeOlderPoints": "5",
+        "removeOlder": "0",
+        "removeOlderPoints": "",
         "removeOlderUnit": "3600",
         "cutout": 0,
         "useOneColor": false,
@@ -767,7 +745,7 @@
         "type": "postgresql",
         "z": "535e4b2995bd1b33",
         "name": "Select Last Scans",
-        "query": "select m.measure, m.\"timestamp\" from (select * from measures\n\t\t\t\t\t\torder by id\n\t\t\t\t\t\tdesc limit 5) m\norder by m.id ASC",
+        "query": "select m.measure, TO_CHAR(m.\"timestamp\",'HH-MI-SS') as \"labels\", m.\"timestamp\" from (select * from measures\n\t\t\t\t\t\torder by id\n\t\t\t\t\t\tdesc limit 100) m\norder by m.id ASC",
         "postgreSQLConfig": "181746e1a8504a56",
         "split": false,
         "rowsPerMsg": 1,
@@ -776,8 +754,7 @@
         "y": 320,
         "wires": [
             [
-                "78b27f3f00a1d5a9",
-                "e54ec05ae1c82e1e"
+                "78b27f3f00a1d5a9"
             ]
         ]
     },
@@ -786,7 +763,7 @@
         "type": "function",
         "z": "535e4b2995bd1b33",
         "name": "function 1",
-        "func": "var query = msg.payload\nvar measures = []\nvar timestamps = []\nfor (var i=0; i < query.length; i++){\n    measures[i] = query[i]['measure']\n    timestamps[i] = query[i]['timestamp']\n}\nmsg.payload=[{\n    \"series\": [\"temp1\"],\n    \"data\": [ output ],\n    \"labels\": timestamps\n}];\nreturn msg",
+        "func": "var query = msg.payload\nvar measures = []\nvar timestamps = []\nfor (var i=0; i < query.length; i++){\n    measures[i] = query[i]['measure']\n    timestamps[i] = query[i]['timestamp']\n}\nmsg.payload=[{\n    \"series\": [\"CO2 PPM\"],\n    \"data\": [ measures ],\n    \"labels\": timestamps\n}];\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -796,9 +773,68 @@
         "y": 400,
         "wires": [
             [
-                "e54ec05ae1c82e1e",
-                "bf9f56b0d129938c"
+                "bf9f56b0d129938c",
+                "7ea96d910b18bc8a"
             ]
+        ]
+    },
+    {
+        "id": "3411f24a05bf4d74",
+        "type": "inject",
+        "z": "535e4b2995bd1b33",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "1",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 220,
+        "wires": [
+            [
+                "1843ad406cd0e098",
+                "ba90024cabcf2913"
+            ]
+        ]
+    },
+    {
+        "id": "1843ad406cd0e098",
+        "type": "function",
+        "z": "535e4b2995bd1b33",
+        "name": "Test",
+        "func": "const payload = msg.payload\nvar time = payload/1000\n//var timeString = time.toTimeString()\nvar measure = Math.random() * 100\nmsg.params = [ time, measure ];\nmsg.payload = [ time, measure ];\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 650,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7d87d6b216a2ec8c",
+        "type": "postgresql",
+        "z": "535e4b2995bd1b33",
+        "name": "Test",
+        "query": "insert into measures (\"timestamp\" , measure) values (to_timestamp($1), $2);",
+        "postgreSQLConfig": "181746e1a8504a56",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 1270,
+        "y": 320,
+        "wires": [
+            []
         ]
     },
     {
